@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Header({user}) {
+function Header(props) {
   return (
     <div>
-      Welcome, {user}!
-      <button>Log Out</button>
+      Welcome, {props.user}!
+      <button onClick={() => props.setUser('')}>Log Out</button>
     </div>
   )
 }

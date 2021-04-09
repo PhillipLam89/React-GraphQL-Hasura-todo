@@ -1,13 +1,13 @@
 import React from 'react'
 
-function Login({ setUser }) {
+function Login(props) {
 
   const [username, setUsername] = React.useState('')
 
 
   function handleSubmit(e) {
     e.preventDefault()
-    setUser(username)
+    props.setUser(username)
 
   }
 
