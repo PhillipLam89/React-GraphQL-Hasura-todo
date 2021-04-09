@@ -1,8 +1,11 @@
 import React from 'react'
 
-function Header() {
+function Header({user}) {
   return (
-    <div>Header</div>
+    <div>
+      Welcome, {user}!
+      <button>Log Out</button>
+    </div>
   )
 }
 
