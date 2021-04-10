@@ -1,15 +1,21 @@
 import React from 'react'
+import {UserContext} from '../App'
 
-function Post({post, user}) {
+function Post({image, content, user}) {
+
   return (
-  <>
-    <br></br>
-    {post.image && (
-      <img alt="" src={URL.createObjectURL(post.image)} style={{borderRadius: 10, height: 100, width: 200, objectFit: 'cover'}} />
+  <UserContext.Consumer>
+    {currentUser => (
+      <div>
+        <br></br>
+        {image && (
+          <img alt="" src={URL.createObjectURL(image)} style={{borderRadius: 10, height: 100, width: 200, objectFit: 'cover'}} />
+        )}
+          <p>Content: {content}</p>
+          <h3 style={{color: currentUser === user && 'green'}}>Posted by: {user}</h3>
+      </div>
     )}
-      <p>Content: {post.content}</p>
-      <h3>Posted by: {user}</h3>
-  </>
+  </UserContext.Consumer>
   )
 }
 

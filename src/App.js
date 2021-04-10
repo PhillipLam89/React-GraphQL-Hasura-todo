@@ -4,6 +4,7 @@ import Header from './components/Header'
 import CreatePost from './components/CreatePost'
 import PostList from './components/PostList'
 
+export const UserContext = React.createContext()
 
 function App() {
 
@@ -23,11 +24,11 @@ function App() {
       return <Login setUser={setUser}/>
   }
 
-  return <div style={{padding: '1rem'}}>
+  return <UserContext.Provider value={user} style={{padding: '1rem'}}>
            <Header user={user} setUser={setUser}/>
            <CreatePost user={user} handleAddPost={handleAddPost} />
-           <PostList posts={posts} user={user}/>
-         </div>
+           <PostList posts={posts}/>
+         </UserContext.Provider> //Context provider allows us to pass the 'user' prop down 2 levels directly to Post.js component. NO NEED 2 PROP DRILLZ
 }
 
 export default App
