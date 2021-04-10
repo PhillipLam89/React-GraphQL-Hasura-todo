@@ -6,15 +6,16 @@ function CreatePost(props) {
     const [content, setContent] = React.useState('')
     const [image, setImage] = React.useState(null)
 
-    const contentRef = React.useRef()
+
     const imageInputRef = React.useRef()
 
 
     function handleSubmit(e) {
       e.preventDefault()
       const post = {content, image, user: props.user}
-      const newPosts = [post, ...props.posts]
-      props.setPosts(newPosts)
+      props.handleAddPost(post)
+      // const newPosts = [post, ...props.posts]
+      // props.setPosts(prevPosts => [post, ...prevPosts])
       setContent('') //this along with value attribute will make this input a controlled element by state
       imageInputRef.current.value = '' //refs must be used for inputs with type file since controlled state wont work
       imageInputRef.current.files = setImage('') //resets internal image selection. If not, clicking submit will post previous img even if value is ''
