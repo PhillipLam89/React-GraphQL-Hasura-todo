@@ -5,8 +5,6 @@ import CreatePost from './components/CreatePost'
 import PostList from './components/PostList'
 
 
-
-
 function App() {
 
   const [user, setUser] = React.useState('PHILLIP')
