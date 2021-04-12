@@ -8,12 +8,12 @@ import postReducer from './reducer'
 export const UserContext = React.createContext()
 export const PostContext = React.createContext({posts: []})
 
+
 function App() {
   const initialPostState = React.useContext(PostContext)
+
   const [state, dispatch] =  React.useReducer(postReducer, initialPostState)
   const [user, setUser] = React.useState('PHILLIP')
-  // const [posts, setPosts] = React.useState([])
-
 
   React.useEffect(() => {
       document.title = user ? `${user}'s Feed` : 'Please Login'

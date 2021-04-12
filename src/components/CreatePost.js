@@ -2,14 +2,13 @@ import React from 'react'
 import {PostContext} from '../App'
 
 function CreatePost(props) {
-
-    const {dispatch} = React.useContext(PostContext)
-
+        //React.useContext(PostContext) returns an object with the dispatch function as one of the properties
+    const dispatch = React.useContext(PostContext).dispatch
     const [content, setContent] = React.useState('')
     const [image, setImage] = React.useState(null)
-
-
     const imageInputRef = React.useRef()
+
+
     function handleSubmit(e) {
       e.preventDefault()
 
@@ -25,7 +24,7 @@ function CreatePost(props) {
     <div>
       <h1>Create New Post</h1>
       <form onSubmit={handleSubmit}>
-        <input required value={content} onChange={e =>setContent(e.target.value)} type="text" placeholder="add Content"></input>
+        <input value={content} onChange={e =>setContent(e.target.value)} type="text" placeholder="add Content"></input>
         <input ref={imageInputRef} onChange={e =>setImage(e.target.files[0])} type="file"></input>
         <br></br>
         <br></br>
