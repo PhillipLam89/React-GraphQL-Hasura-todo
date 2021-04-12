@@ -1,7 +1,7 @@
 import React from 'react'
 import {PostContext} from '../App'
 
-function CreatePost(props) {
+function CreatePost({user}) {
         //React.useContext(PostContext) returns an object with the dispatch function as one of the properties
     const dispatch = React.useContext(PostContext).dispatch
     const [content, setContent] = React.useState('')
@@ -12,7 +12,7 @@ function CreatePost(props) {
     function handleSubmit(e) {
       e.preventDefault()
 
-      const post = {content, image, user: props.user}
+      const post = {content, image, user}
       dispatch({type: 'ADD_POST', payload: {post}})
 
       setContent('') //this along with value attribute will make this input a controlled element by state
@@ -30,6 +30,7 @@ function CreatePost(props) {
         <br></br>
         <button style={{marginBottom: 10}} type="submit">Submit Post</button>
       </form>
+      <h2>All Posts</h2>
     </div>
   )
 }

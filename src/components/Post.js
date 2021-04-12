@@ -1,5 +1,7 @@
 import React from 'react'
 import {UserContext} from '../App'
+import timeRightNow from '../GetCurrentTimePST'
+import {getTimeFromDate} from '../GetCurrentTimePST'
 
 function Post({image, content, user}) {
      const currentUser = React.useContext(UserContext)
@@ -11,6 +13,9 @@ function Post({image, content, user}) {
     )}
       <p>Content: {content}</p>
       <h3 style={{color: currentUser === user ? 'green' : 'purple '}}>Posted by: {user}{currentUser === user ? <span style={{color: 'goldenrod'}}> (me)</span>: ''}</h3>
+      <p>Posted at: {getTimeFromDate}</p>
+      <div style={{background: 'red', width: '100%', height: '2px'}}></div>
+
   </div>
   )
 }
