@@ -28,7 +28,7 @@ function CreatePost(props) {
         <input ref={imageInputRef} onChange={e =>setImage(e.target.files[0])} type="file"></input>
         <br></br>
         <br></br>
-        <button type="submit">Submit Post</button>
+        <button style={{marginBottom: 10}} type="submit">Submit Post</button>
       </form>
     </div>
   )
