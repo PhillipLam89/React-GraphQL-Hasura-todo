@@ -1,21 +1,20 @@
 import React from 'react'
+import {PostContext} from '../App'
 
-function CreatePost(props) {
-
-
+function CreatePost({user}) {
+        //React.useContext(PostContext) returns an object with the dispatch function as one of the properties
+    const dispatch = React.useContext(PostContext).dispatch
     const [content, setContent] = React.useState('')
     const [image, setImage] = React.useState(null)
-
-
     const imageInputRef = React.useRef()
 
 
     function handleSubmit(e) {
       e.preventDefault()
-      const post = {content, image, user: props.user}
-      props.handleAddPost(post)
-      // const newPosts = [post, ...props.posts]
-      // props.setPosts(prevPosts => [post, ...prevPosts])
+
+      const post = {content, image, user}
+      dispatch({type: 'ADD_POST', payload: {post}})
+
       setContent('') //this along with value attribute will make this input a controlled element by state
       imageInputRef.current.value = '' //refs must be used for inputs with type file since controlled state wont work
       imageInputRef.current.files = setImage('') //resets internal image selection. If not, clicking submit will post previous img even if value is ''
@@ -29,8 +28,9 @@ function CreatePost(props) {
         <input ref={imageInputRef} onChange={e =>setImage(e.target.files[0])} type="file"></input>
         <br></br>
         <br></br>
-        <button type="submit">Submit Post</button>
+        <button style={{marginBottom: 10}} type="submit">Submit Post</button>
       </form>
+      <h2>All Posts</h2>
     </div>
   )
 }
