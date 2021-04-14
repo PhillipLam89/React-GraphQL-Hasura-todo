@@ -1,18 +1,25 @@
 import React from 'react'
 import {PostContext} from '../App'
 
+
 function CreatePost({user}) {
         //React.useContext(PostContext) returns an object with the dispatch function as one of the properties
     const dispatch = React.useContext(PostContext).dispatch
     const [content, setContent] = React.useState('')
     const [image, setImage] = React.useState(null)
+    const [time, setTime] = React.useState('')
     const imageInputRef = React.useRef()
 
 
+
+
     function handleSubmit(e) {
+
       e.preventDefault()
 
-      const post = {content, image, user}
+
+      const post = {content, image, user, id: Date.now()}
+
       dispatch({type: 'ADD_POST', payload: {post}})
 
       setContent('') //this along with value attribute will make this input a controlled element by state
