@@ -17,9 +17,10 @@ function App() {
   if (error) return <h1>Error while fetching data...</h1>
   return loading ? <h1>Loading...</h1> :  (
 
-    <React.Fragment>
-      <h1>GraphQL Checklist</h1>
-      {/* Todo Form */}
+    <div className="vh-100 code flex flex-column items-center bg-purple white pa3">
+      <h1 className="f2-l">GraphQL Checklist
+          <span role="img" aria-label="Checkmark">✔️</span>
+      </h1>
 
       <form>
         <input
@@ -37,7 +38,7 @@ function App() {
         <button style={{marginLeft: '.5rem'}}>&times;</button>
       </p>
       ))}
-    </React.Fragment>
+    </div>
   )
 }
 
