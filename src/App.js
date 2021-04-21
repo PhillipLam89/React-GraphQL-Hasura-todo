@@ -1,37 +1,44 @@
 import React from 'react'
-import Login from './components/Login'
-import Header from './components/Header'
-import CreatePost from './components/CreatePost'
-import PostList from './components/PostList'
-import postReducer from './reducer'
+import {useQuery} from '@apollo/react-hooks'
+import {gql} from 'apollo-boost'
 
-export const UserContext = React.createContext()
-export const PostContext = React.createContext({posts: []})
-
+const GET_TODOS = gql`
+query getTodos {
+  todos {
+    done
+    text
+    id
+  }
+}
+`
 
 function App() {
-  const initialPostState = React.useContext(PostContext)
+  const {data, loading, error} = useQuery(GET_TODOS)
+  if (error) return <h1>Error while fetching data...</h1>
+  return loading ? <h1>Loading...</h1> :  (
 
-  const [state, dispatch] =  React.useReducer(postReducer, initialPostState)
-  const [user, setUser] = React.useState('PHILLIP')
+    <React.Fragment>
+      <h1>GraphQL Checklist</h1>
+      {/* Todo Form */}
 
-  React.useEffect(() => {
-      document.title = user ? `${user}'s Feed` : 'Please Login'
-  }, [user])
+      <form>
+        <input
+          type="text"
+          placeholder="write your todo"
+         />
+         <button type="submit">Create</button>
+      </form>
 
-
-  if (!user) {
-      return <Login setUser={setUser}/>
-  }
-
-  return (
-        <PostContext.Provider value={{state, dispatch}}>
-          <UserContext.Provider value={user} style={{padding: '1rem'}}>
-            <Header user={user} setUser={setUser}/>
-            <CreatePost user={user}  />
-            <PostList posts={state.posts}/>
-          </UserContext.Provider>
-        </PostContext.Provider>)
+      {data.todos.map(todo => (
+      <p key={todo.id}>
+        <span>
+          {todo.text}
+        </span>
+        <button style={{marginLeft: '.5rem'}}>&times;</button>
+      </p>
+      ))}
+    </React.Fragment>
+  )
 }
 
 export default App
