@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/React-GraphQL-Hasura-todo/static/js/main.f9259513.chunk.js",
+    "main.js.map": "/React-GraphQL-Hasura-todo/static/js/main.f9259513.chunk.js.map",
+    "runtime-main.js": "/React-GraphQL-Hasura-todo/static/js/runtime-main.4cb98128.js",
+    "runtime-main.js.map": "/React-GraphQL-Hasura-todo/static/js/runtime-main.4cb98128.js.map",
+    "static/js/2.cbe47d37.chunk.js": "/React-GraphQL-Hasura-todo/static/js/2.cbe47d37.chunk.js",
+    "static/js/2.cbe47d37.chunk.js.map": "/React-GraphQL-Hasura-todo/static/js/2.cbe47d37.chunk.js.map",
+    "index.html": "/React-GraphQL-Hasura-todo/index.html",
+    "static/js/2.cbe47d37.chunk.js.LICENSE.txt": "/React-GraphQL-Hasura-todo/static/js/2.cbe47d37.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4cb98128.js",
+    "static/js/2.cbe47d37.chunk.js",
+    "static/js/main.f9259513.chunk.js"
+  ]
+}
