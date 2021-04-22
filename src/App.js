@@ -3,6 +3,7 @@ import {useQuery, useMutation} from '@apollo/react-hooks'
 import {gql} from 'apollo-boost'
 
 
+//gql allows us to write graphQL queries directly in JS (must be imported from apollo-boost first)
 const GET_TODOS = gql`
 query getTodos {
   todos {
@@ -34,11 +35,24 @@ mutation addTodo($text: String!) {
   }
 }
 `
+const DELETE_TODO = gql`
+mutation deleteTodo($id: uuid!) {
+  delete_todos(where: {id: {_eq: $id}}) {
+    returning {
+      id
+      text
+      done
+    }
+  }
+}
+`
+
 function App() {
   const [todoText, setTodoText] = React.useState('')
   const {data, loading, error} = useQuery(GET_TODOS)
   const [toggleTodo] =  useMutation(TOGGLE_TODO) //useMutation will return an array with a sepcial function "toggleTodo" which we destructure
   const [addTodo] = useMutation(ADD_TODO)
+  const [deleteTodo] = useMutation(DELETE_TODO)
 
   async function handleToggleTodo({id, done}) {
    const data = await toggleTodo({variables: {id, done: !done}}) //we must use async/await or promise chaining here since toggleTodo returns a promise
@@ -52,6 +66,20 @@ function App() {
     // to display the newest items due to how Apollo's caching works
     console.log('newest todo added ==>', data)
     setTodoText('')
+  }
+
+  async function handleDeleteTodo({id}) {
+   const isConfirmed = window.confirm('Sure you wanna delete this??')
+
+   if (isConfirmed) {
+      const data = await deleteTodo({variables: {id: id}, update: cache => {
+        // this is an alternative to using refetchQueries to instantly display database items
+        const prevData = cache.readQuery({query: GET_TODOS})  //this is longer code but prevents sending unnecessary http fetch requests
+        const newTodos = prevData.todos.filter(todo => todo.id !== id) //
+        cache.writeQuery({query: GET_TODOS, data: {todos: newTodos}})
+      }})
+      console.log(data)
+   }
   }
 
 
@@ -78,7 +106,7 @@ function App() {
             <span className={`pointer list pa1 f3 ${todo.done && 'strike'}`}>
               {todo.text}
             </span>
-            <button className="bg-transparent bn f4" style={{marginLeft: '.5rem', color: 'red', transform: 'scale(2)'}}>&times;</button>
+            <button onClick={() => handleDeleteTodo(todo)} className="bg-transparent bn f4" style={{marginLeft: '.5rem', color: 'red', transform: 'scale(2)', cursor: 'pointer'}}>&times;</button>
           </p>
           ))}
        </div>
