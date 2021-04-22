@@ -23,15 +23,37 @@ mutation toggleTodo($id: uuid!, $done: Boolean!) {
   }
 }
 `
-
+const ADD_TODO = gql`
+mutation addTodo($text: String!) {
+  insert_todos(objects: {text: $text}) {
+    returning {
+      id
+      text
+      done
+    }
+  }
+}
+`
 function App() {
+  const [todoText, setTodoText] = React.useState('')
   const {data, loading, error} = useQuery(GET_TODOS)
-  const [toggleTodo] =  useMutation(TOGGLE_TODO)
+  const [toggleTodo] =  useMutation(TOGGLE_TODO) //useMutation will return an array with a sepcial function "toggleTodo" which we destructure
+  const [addTodo] = useMutation(ADD_TODO)
 
   async function handleToggleTodo({id, done}) {
-   const data = await toggleTodo({variables: {id, done: !done}})
-    console.log(data)
+   const data = await toggleTodo({variables: {id, done: !done}}) //we must use async/await or promise chaining here since toggleTodo returns a promise
+    console.log('toggled this todo item ==>',data)
   }
+  async function handleAddingTodo(e) {
+    e.preventDefault()
+    if (!todoText.trim()) return;
+    const data = await addTodo({variables: {text: todoText}, refetchQueries: [{query: GET_TODOS}]})
+    //refetchQueries allows Apollo to query our newly updated database right away (after adding a new todo) and will display all items instantly. Otherwise, we would have to refresh
+    // to display the newest items due to how Apollo's caching works
+    console.log('newest todo added ==>', data)
+    setTodoText('')
+  }
+
 
   if (error) return <h1>Error while fetching data...</h1>
   return loading ? <h1>Loading...</h1> :  (
@@ -41,10 +63,12 @@ function App() {
           <span role="img" aria-label="Checkmark">✔️</span>
       </h1>
 
-      <form className="mb3">
+      <form onSubmit={handleAddingTodo} className="mb3">
         <input className="pa2 f4 b--dashed"
           type="text"
           placeholder="write your todo"
+          onChange={e => setTodoText(e.target.value)}
+          value={todoText}
          />
          <button className="pa2 f4 bg-green" type="submit">Create</button>
       </form>
