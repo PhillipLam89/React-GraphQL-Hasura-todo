@@ -84,13 +84,14 @@ function App() {
 
 
   if (error) return <h1>Error while fetching data...</h1>
-  return loading ? <h1>Loading...</h1> :  (
+  return loading ? <h1 style={{textAlign: 'center', height:'100vh', background: 'royalBlue'}}>Loading Database...</h1> :  (
 
-    <div className="vh-100 code flex flex-column items-center bg-purple white pa3">
+    <div className="vh-100 code flex flex-column items-center bg-blue white pa3">
       <h1 className="f2-l">GraphQL Checklist
           <span role="img" aria-label="Checkmark">✔️</span>
       </h1>
 
+      <h3>Preloaded data are stored on database...</h3>
       <form onSubmit={handleAddingTodo} className="mb3">
         <input className="pa2 f4 b--dashed"
           type="text"
